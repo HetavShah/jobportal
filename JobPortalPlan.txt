@@ -1,0 +1,109 @@
+Job Portal Project Model ( Backend )
+-------------------------------------------------------------------------------
+Libraries -> 
+
+bcrypt
+jwt
+email-validator
+phone
+Express
+Sequalize 
+pg
+
+postgres -> RDBMS
+
+
+
+----JOBSEEKER ROUTES-------------
+
+/jobseeker/signup
+post -> Signup a Jobseeker
+
+/jobseeker/login
+post -> To login a Jobseeker
+
+
+protectRoute -> After login only ( middleware )
+/jobseeker/:id
+get -> get particular jobseeker by id
+patch -> update particulalr jobseeker's profile
+delete -> delete particular jobseeker's profile
+
+
+
+protectRoute -> After login only ( middleware )
+/jobseeker/:id/education
+get -> get Particular jobseeker's Education Details
+post -> Create Particular Jobseeker's Education Details
+patch -> Update Education Details
+delete -> Delete Education Details
+
+
+
+protectRoute -> After login only ( middleware )
+/jobseeker/:id/experience
+get  ( Similar to Education )
+post
+patch
+delete
+
+/jobseeker/jobs
+get -> Get List of Available Jobs
+
+
+
+/jobseeker/:id/apply/:jobid
+post -> Apply for Particular Job
+delete -> Delete Application for The particular Job
+
+
+/jobseeker/:id/response
+get -> get the Response for the all jobs
+       that a particular jobseeker has applied
+
+/jobseeker/:id/response/:jobid
+get-> Get the response for the particular job
+
+-------------------------------------------------------------------------------
+
+----------RECRUITER ROUTES-----------
+
+
+/recruiter/signup
+post -> signup a recruiter with company details
+
+/recruiter/login
+post -> Login a recruiter
+
+ProtectRoute 
+/recruiter/:id/company
+post -> Create Details of the company for a particular recruiter
+
+/recruiter/:id/job/
+post -> post a job
+
+/recruiter/:id/job/:jobid
+get-> get details of job posted by the particular recruiter
+patch -> update job details
+delete -> delete job details
+
+/recruiter/:id/job/:jobid/response
+get-> see the jobseeker applied for particular job
+post-> create the job response for a particular job
+patch-> update response details
+
+----------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
