@@ -4,7 +4,7 @@ const port=3000;
 const db = require("./config/database");
 const jobseekerRouter=require('./routers/jobseekerRouter');
 const recruiterRoute=require('./routers/recruiterRouter');
-const testingTables=require('./testingTables');
+// const testingTables=require('./testingTables');
 app.use(express.json());
 
 app.use('/jobseeker',jobseekerRouter);
