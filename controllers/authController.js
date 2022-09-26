@@ -74,7 +74,8 @@ module.exports.login = async function login(req, res) {
       });
 
       id = user.jobseeker_id;
-    } else if (req.baseUrl == "/recruiter") {
+    } 
+    else if (req.baseUrl == "/recruiter") {
       user = await recruiterModel.findOne({
         where: {
           email: givenEmail,
@@ -111,5 +112,32 @@ module.exports.login = async function login(req, res) {
 };
 
 module.exports.protectRoute=async function protectRoute(req,res,next){
-  
+  try{
+
+    if(req.baseUrl=='/jobseeker')
+    {
+        
+    }
+    else if(req.baseUrl=='/recruiter')
+    {
+
+    }
+
+
+  }
+  catch(error){
+    
+    return res.status(422).json({
+      message:error.message
+    })
+
+  }
+
+}
+
+module.exports.logout=function logout(req,res){
+  res.cookie('login',' ',{maxAge:1});
+  res.json({
+    message:"User logged out succesfully"
+  });
 }

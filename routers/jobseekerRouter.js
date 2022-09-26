@@ -1,6 +1,6 @@
 const express=require('express');
 const jobseekerRouter=express.Router();
-const {signup,login}=require('../controllers/authController')
+const {signup,login,protectRoute,logout}=require('../controllers/authController')
 const {getJobseekerById}=require('../controllers/jobseekerController');
 
 jobseekerRouter
@@ -13,6 +13,11 @@ jobseekerRouter
 
 jobseekerRouter
 .route('/:id')
-.get(getJobseekerById);
+.get(protectRoute,getJobseekerById);
+
+jobseekerRouter
+.route('/logout')
+.get(logout);
+
 
 module.exports=jobseekerRouter;

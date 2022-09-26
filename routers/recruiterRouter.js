@@ -1,6 +1,6 @@
 const express=require('express');
 const recruiterRouter=express.Router();
-const {signup,login}=require('../controllers/authController')
+const {signup,login,protectRoute,logout}=require('../controllers/authController')
 const {getRecruiterById}=require('../controllers/recruiterController');
 
 recruiterRouter
@@ -13,6 +13,10 @@ recruiterRouter
 
 recruiterRouter
 .route('/:id')
-.get(getRecruiterById);
+.get(protectRoute,getRecruiterById);
+
+recruiterRouter
+.route('/logout')
+.get(logout);
 
 module.exports=recruiterRouter;
