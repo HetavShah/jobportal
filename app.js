@@ -4,9 +4,10 @@ const port=3000;
 const db = require("./config/database");
 const jobseekerRouter=require('./routers/jobseekerRouter');
 const recruiterRoute=require('./routers/recruiterRouter');
+const cookieParser=require('cookie-parser');
 // const testingTables=require('./testingTables');
 app.use(express.json());
-
+app.use(cookieParser());
 app.use('/jobseeker',jobseekerRouter);
 app.use('/recruiter',recruiterRoute);
 

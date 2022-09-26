@@ -1,6 +1,9 @@
 const jobseekerModel = require("../models/jobseekerModel");
 const recruiterModel = require("../models/recruiterModel");
 const companyModel = require("../models/companyModel");
+const { JWT_KEY } = require("../secrets");
+const bcrypt = require("bcrypt");
+const jwt=require('jsonwebtoken');
 
 module.exports.signup = async function signup(req, res) {
   try {
@@ -14,14 +17,11 @@ module.exports.signup = async function signup(req, res) {
           data: createdData,
         });
       } else {
-        return res.json({
+        return res.status(422).json({
           message: "Invalid Details",
         });
       }
-    } 
-    
-    else if (req.baseUrl == "/recruiter") {
-
+    } else if (req.baseUrl == "/recruiter") {
       let recruiterData = req.body["recruiter_details"];
       let companyData = req.body["company_details"];
 
@@ -35,23 +35,19 @@ module.exports.signup = async function signup(req, res) {
       if (!isCompanyAvailable) {
         let createdData = await companyModel.create(companyData);
         recruiterData["company_id"] = createdData["company_id"];
-      } 
-      
-      else {
+      } else {
         recruiterData["company_id"] = isCompanyAvailable["company_id"];
       }
 
       let recruiterCreatedData = await recruiterModel.create(recruiterData);
-    
+
       if (recruiterCreatedData) {
         res.status(200).json({
           message: "Recruiter Signed Up",
           data: recruiterCreatedData,
         });
-      }
-      
-      else {
-        res.json({
+      } else {
+        res.status(422).json({
           message: "Not Valid Data",
         });
       }
@@ -63,14 +59,57 @@ module.exports.signup = async function signup(req, res) {
   }
 };
 
-module.exports.login = function login(req, res) {
-  if (req.baseUrl == "/jobseeker") {
-    return res.json({
-      message: "Jobseeker Login",
-    });
-  } else if (req.baseUrl == "/recruiter") {
-    return res.json({
-      message: "Recruiter Login",
+module.exports.login = async function login(req, res) {
+  try {
+    let givenEmail = req.body.email;
+    let givenPassword = req.body.password;
+    let id = undefined;
+    let user = undefined;
+
+    if (req.baseUrl == "/jobseeker") {
+      user = await jobseekerModel.findOne({
+        where: {
+          email: givenEmail,
+        },
+      });
+
+      id = user.jobseeker_id;
+    } else if (req.baseUrl == "/recruiter") {
+      user = await recruiterModel.findOne({
+        where: {
+          email: givenEmail,
+        },
+      });
+
+      id = user.recruiter_id;
+    }
+
+    if (user) {
+      const match = await bcrypt.compare(givenPassword, user.password);
+      if (match) {
+        let jwtoken = jwt.sign({ payload: id }, JWT_KEY); // create token with payload as id
+        res.cookie("login", jwtoken, { httpOnly: true }); // set cookie
+        return res.status(200).json({
+          message: "User Logged In",
+          details: user,
+        });
+      } else {
+        return res.status(401).json({
+          message: "Invalid Credentials",
+        });
+      }
+    } else {
+      return res.status(404).json({
+        message: "User Not Found",
+      });
+    }
+  } catch (error) {
+    res.status(422).json({
+      message: error.message,
     });
   }
 };
+
+module.exports.protectRoute=async function protectRoute(req,res,next){
+  
+}
