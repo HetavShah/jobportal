@@ -18,9 +18,13 @@ module.exports.signup = async function signup(req, res) {
           message: "Invalid Details",
         });
       }
-    } else if (req.baseUrl == "/recruiter") {
+    } 
+    
+    else if (req.baseUrl == "/recruiter") {
+
       let recruiterData = req.body["recruiter_details"];
       let companyData = req.body["company_details"];
+
       let isCompanyAvailable = await companyModel.findOne({
         attributes: ["company_id"],
         where: {
@@ -31,17 +35,22 @@ module.exports.signup = async function signup(req, res) {
       if (!isCompanyAvailable) {
         let createdData = await companyModel.create(companyData);
         recruiterData["company_id"] = createdData["company_id"];
-      } else {
+      } 
+      
+      else {
         recruiterData["company_id"] = isCompanyAvailable["company_id"];
       }
 
       let recruiterCreatedData = await recruiterModel.create(recruiterData);
+    
       if (recruiterCreatedData) {
         res.json({
           message: "Recruiter Signed Up",
           data: recruiterCreatedData,
         });
-      } else {
+      }
+      
+      else {
         res.json({
           message: "Not Valid Data",
         });
