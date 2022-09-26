@@ -44,9 +44,7 @@ Experience.init(
 )
 Experience.removeAttribute('id');
 
-Experience.sync({
-    alter: true,
-}).then(function () { 
+Experience.sync().then(function () { 
     console.log("Experience Table Created Successfully");
 })
 .catch(function(err){

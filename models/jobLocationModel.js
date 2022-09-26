@@ -43,9 +43,7 @@ JobLocation.init(
 
 JobLocation.removeAttribute('id');
 
-JobLocation.sync({
-    alter: true,
-}).then(function () { 
+JobLocation.sync().then(function () { 
     console.log("JobLocation Table Created Successfully");
 })
 .catch(function(err){

@@ -39,7 +39,8 @@ Recruiter.init(
                 validator: function(v){
                         return phone(v).isValid;
                 }
-            }
+            },
+            unique:true,
         },
         alternate_contact:{
             type:DataTypes.STRING,
@@ -47,7 +48,8 @@ Recruiter.init(
                 validator: function(v){
                         return phone(v).isValid;
                 }
-            }
+            },
+            unique:true,
         },
         reg_date:{
             type:DataTypes.DATE,
@@ -56,6 +58,7 @@ Recruiter.init(
         email:{
             type:DataTypes.STRING,
             allowNull:false,
+            unique:true,
             validate:{
                 isEmail:true
             }
@@ -78,9 +81,7 @@ Recruiter.init(
 
 Recruiter.removeAttribute('id');
 
-Recruiter.sync({
-    alter: true,
-}).then(function () { 
+Recruiter.sync().then(function () { 
     console.log("Recruiter Table Created Successfully");
 })
 .catch(function(err){

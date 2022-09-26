@@ -1,4 +1,4 @@
-const { Sequelize, DataTypes, Model } = require("sequelize");
+const { Sequelize, DataTypes, Model, UniqueConstraintError } = require("sequelize");
 const sequelize = require("../config/database");
 class Company extends Model{}
 
@@ -21,8 +21,11 @@ Company.init(
         url:{
             type:DataTypes.STRING,
             validate:{
-                isUrl:true
-            }
+                isUrl:{
+                    msg:"Not a valid Url"
+                }
+            },
+            unique:true,
         }
 
     },
@@ -38,9 +41,7 @@ Company.init(
 )
 Company.removeAttribute('id');
 
-Company.sync({
-    alter: true,
-}).then(function () { 
+Company.sync().then(function () { 
     console.log("Company Table Created Successfully");
 })
 .catch(function(err){

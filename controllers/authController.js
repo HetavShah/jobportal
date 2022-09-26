@@ -9,7 +9,7 @@ module.exports.signup = async function signup(req, res) {
     if (req.baseUrl == "/jobseeker") {
       let createdData = await jobseekerModel.create(data);
       if (createdData) {
-        return res.json({
+        return res.status(200).json({
           message: "Jobseeker Signed Up Successfully",
           data: createdData,
         });
@@ -44,7 +44,7 @@ module.exports.signup = async function signup(req, res) {
       let recruiterCreatedData = await recruiterModel.create(recruiterData);
     
       if (recruiterCreatedData) {
-        res.json({
+        res.status(200).json({
           message: "Recruiter Signed Up",
           data: recruiterCreatedData,
         });
@@ -57,7 +57,7 @@ module.exports.signup = async function signup(req, res) {
       }
     }
   } catch (error) {
-    return res.json({
+    return res.status(422).json({
       message: error.message,
     });
   }

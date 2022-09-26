@@ -37,9 +37,7 @@ Post.init(
 
 Post.removeAttribute('id');
 
-Post.sync({
-    alter: true,
-}).then(function () { 
+Post.sync().then(function () { 
     console.log("Post Table Created Successfully");
 })
 .catch(function(err){

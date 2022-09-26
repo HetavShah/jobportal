@@ -1,6 +1,7 @@
 const { Sequelize, DataTypes, Model } = require("sequelize");
 const sequelize = require("../config/database");
 const {phone} = require('phone');
+const bcrypt=require('bcrypt');
 class Jobseeker extends Model{}
 
 Jobseeker.init(
@@ -30,7 +31,8 @@ Jobseeker.init(
                 validator: function(v){
                         return phone(v).isValid;
                 }
-            }
+            },
+            unique:true,
         },
         alternate_contact:{
             type:DataTypes.STRING,
@@ -38,7 +40,8 @@ Jobseeker.init(
                 validator: function(v){
                         return phone(v).isValid;
                 }
-            }
+            },
+            unique:true,
         },
         gender:{
             type:DataTypes.CHAR(1),
@@ -51,6 +54,7 @@ Jobseeker.init(
         email:{
             type:DataTypes.STRING,
             allowNull:false,
+            unique:true,
             validate:{
                 isEmail:true
             }
@@ -77,9 +81,15 @@ Jobseeker.init(
 )
 Jobseeker.removeAttribute('id');
 
-Jobseeker.sync({
-    alter: true,
-}).then(function () { 
+Jobseeker.beforeCreate(async function HashPassword(user,options){
+    let salt=await bcrypt.genSalt();
+    let hashedString= await bcrypt.hash(this.password,salt);
+    user.password=hashedString;
+    //   console.log(user.password);
+    //   console.log(hashedString);
+
+})
+Jobseeker.sync().then(function () { 
     console.log("Jobseeker Table Created Successfully");
 })
 .catch(function(err){

@@ -39,9 +39,7 @@ JobseekerSkill.init(
 )
 JobseekerSkill.removeAttribute('id');
 
-JobseekerSkill.sync({
-    alter: true,
-}).then(function () { 
+JobseekerSkill.sync().then(function () { 
     console.log("JobseekerSkill Table Created Successfully");
 })
 .catch(function(err){

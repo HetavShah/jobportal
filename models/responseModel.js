@@ -41,9 +41,7 @@ Response.init(
 
 Response.removeAttribute('id');
 
-Response.sync({
-    alter: true,
-}).then(function () { 
+Response.sync().then(function () { 
     console.log("Response Table Created Successfully");
 })
 .catch(function(err){

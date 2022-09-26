@@ -27,9 +27,7 @@ JobType.init(
 )
 JobType.removeAttribute('id');
 
-JobType.sync({
-    alter: true,
-}).then(function () { 
+JobType.sync().then(function () { 
     console.log("JobType Table Created Successfully");
 })
 .catch(function(err){

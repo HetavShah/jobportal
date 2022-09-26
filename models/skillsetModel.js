@@ -27,9 +27,7 @@ Skillset.init(
 )
 Skillset.removeAttribute('id');
 
-Skillset.sync({
-    alter: true,
-}).then(function () { 
+Skillset.sync().then(function () { 
     console.log("Skillset Table Created Successfully");
 })
 .catch(function(err){

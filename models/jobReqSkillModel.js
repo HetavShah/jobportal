@@ -34,9 +34,7 @@ JobReqSkill.init(
 )
 JobReqSkill.removeAttribute('id');
 
-JobReqSkill.sync({
-    alter: true,
-}).then(function () { 
+JobReqSkill.sync().then(function () { 
     console.log("JobReqSkill Table Created Successfully");
 })
 .catch(function(err){

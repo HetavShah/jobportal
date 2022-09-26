@@ -37,9 +37,7 @@ Apply.init(
 
 Apply.removeAttribute('id');
 
-Apply.sync({
-    alter: true,
-}).then(function () { 
+Apply.sync().then(function () { 
     console.log("Apply Table Created Successfully");
 })
 .catch(function(err){

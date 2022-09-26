@@ -57,9 +57,7 @@ Education.init(
 )
 Education.removeAttribute('id');
 
-Education.sync({
-    alter: true,
-}).then(function () { 
+Education.sync().then(function () { 
     console.log("Education Table Created Successfully");
 })
 .catch(function(err){
