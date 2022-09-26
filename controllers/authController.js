@@ -1,18 +1,28 @@
+const jobseekerModel=require('../models/jobseekerModel');
+const recruiterModel=require('../models/recruiterModel');
 
-module.exports.signup=function signup(req,res){
- 
+
+module.exports.signup=async function signup(req,res){
+
+  let data=req.body;
+
   if(req.baseUrl=='/jobseeker'){
-
-   return res.json({
-      message:"Jobseeker Signup"
-    })
-  }
-  
-  else if (req.baseUrl=='/recruiter'){
-
+   let createdData=await jobseekerModel.create(data);
+   if(createdData){
     return res.json({
-      message:"Recruiter Signup"
+      message:"Jobseeker Signed Up Successfully",
+      data:createdData
     })
+   }
+
+  }
+  else if (req.baseUrl=='/recruiter'){
+    let createdData=await recruiterModel.create(data);
+    if(createdData){
+     return res.json({
+       message:"Recruiter Signed Up Successfully",
+       data:createdData
+     })
   }
 
   
