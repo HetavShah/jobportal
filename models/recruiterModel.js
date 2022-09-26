@@ -1,6 +1,7 @@
 const { Sequelize, DataTypes, Model } = require("sequelize");
 const sequelize = require("../config/database");
 const {phone} = require('phone');
+const bcrypt=require('bcrypt');
 class Recruiter extends Model{}
 
 Recruiter.init(
@@ -81,11 +82,22 @@ Recruiter.init(
 
 Recruiter.removeAttribute('id');
 
-Recruiter.sync().then(function () { 
+Recruiter.sync()
+.then(function () { 
     console.log("Recruiter Table Created Successfully");
 })
 .catch(function(err){
-console.log(err);
+    console.log(err);
+    })
+    
+
+Recruiter.beforeCreate(async function HashPassword(user,options){
+    let salt=await bcrypt.genSalt();
+    let hashedString= await bcrypt.hash(user.password,salt);
+    user.password=hashedString;
+    //   console.log(user.password);
+    //   console.log(hashedString);
+
 })
 
 module.exports=Recruiter;

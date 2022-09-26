@@ -83,7 +83,7 @@ Jobseeker.removeAttribute('id');
 
 Jobseeker.beforeCreate(async function HashPassword(user,options){
     let salt=await bcrypt.genSalt();
-    let hashedString= await bcrypt.hash(this.password,salt);
+    let hashedString= await bcrypt.hash(user.password,salt);
     user.password=hashedString;
     //   console.log(user.password);
     //   console.log(hashedString);
