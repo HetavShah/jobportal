@@ -12,7 +12,7 @@ JobseekerSkill.init(
             }
         },
         jobseeker_id:{
-            type:DataTypes.INTEGER,
+            type:DataTypes.UUID,
             references:{
                 model:'jobseeker',
                 key:'jobseeker_id'

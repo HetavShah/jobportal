@@ -5,7 +5,7 @@ class Apply extends Model{}
 Apply.init(
     {
         jobseeker_id:{
-            type:DataTypes.INTEGER,
+            type:DataTypes.UUID,
             references:{
                 model:'jobseeker',
                 key:'jobseeker_id'

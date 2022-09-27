@@ -3,7 +3,7 @@ const recruiterModel = require("../models/recruiterModel");
 const companyModel = require("../models/companyModel");
 const { JWT_KEY } = require("../secrets");
 const bcrypt = require("bcrypt");
-const jwt=require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 
 module.exports.signup = async function signup(req, res) {
   try {
@@ -74,8 +74,8 @@ module.exports.login = async function login(req, res) {
       });
 
       id = user.jobseeker_id;
-    } 
-    else if (req.baseUrl == "/recruiter") {
+      userType = "jobseeker";
+    } else if (req.baseUrl == "/recruiter") {
       user = await recruiterModel.findOne({
         where: {
           email: givenEmail,
@@ -83,13 +83,14 @@ module.exports.login = async function login(req, res) {
       });
 
       id = user.recruiter_id;
+      userType = "recruiter";
     }
 
     if (user) {
       const match = await bcrypt.compare(givenPassword, user.password);
       if (match) {
-        let jwtoken = jwt.sign({ payload: id }, JWT_KEY); // create token with payload as id
-        res.cookie("login", jwtoken, { httpOnly: true }); // set cookie
+        let jwToken = jwt.sign({ payload: id }, JWT_KEY); //  create token with payload as id
+        res.cookie("login", jwToken, { httpOnly: true }); // set cookie
         return res.status(200).json({
           message: "User Logged In",
           details: user,
@@ -111,33 +112,49 @@ module.exports.login = async function login(req, res) {
   }
 };
 
-module.exports.protectRoute=async function protectRoute(req,res,next){
-  try{
-
-    if(req.baseUrl=='/jobseeker')
-    {
-        
+module.exports.protectRoute = async function protectRoute(req, res, next) {
+  try {
+    if (req.cookies.login) {
+      let token = req.cookies.login;
+      let id = jwt.verify(token, JWT_KEY);
+      console.log(id.payload);
+      let user;
+      if (req.baseUrl == "/jobseeker") {
+        user = await jobseekerModel.findOne({
+          where: {
+            jobseeker_id: id.payload,
+          },
+        });
+      } else if (req.baseUrl == "/recruiter") {
+        user = await recruiterModel.findOne({
+          where: {
+            recruiter_id: id.payload,
+          },
+        });
+      }
+      console.log(req.params.id);
+      if (user && id.payload==req.params.id) {
+        next();
+      } else {
+        return res.status(401).json({
+          message: "Invalid User",
+        });
+      }
+    } else {
+      return res.status(401).json({
+        message: "Please Login to View This Page",
+      });
     }
-    else if(req.baseUrl=='/recruiter')
-    {
-
-    }
-
-
-  }
-  catch(error){
-    
+  } catch (error) {
     return res.status(422).json({
-      message:error.message
-    })
-
+      message: error.message,
+    });
   }
+};
 
-}
-
-module.exports.logout=function logout(req,res){
-  res.cookie('login',' ',{maxAge:1});
+module.exports.logout = function logout(req, res) {
+  res.cookie("login", " ", { maxAge: 1 });
   res.json({
-    message:"User logged out succesfully"
+    message: "User logged out succesfully",
   });
-}
+};

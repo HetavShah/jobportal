@@ -5,7 +5,7 @@ class Response extends Model{}
 Response.init(
     {
         jobseeker_id:{
-            type:DataTypes.INTEGER,
+            type:DataTypes.UUID,
             references:{
                 model:'jobseeker',
                 key:'jobseeker_id'
@@ -21,7 +21,7 @@ Response.init(
             allowNull:false
         },
         recruiter_id:{
-            type:DataTypes.INTEGER,
+            type:DataTypes.UUID,
             references:{
                 model:'recruiter',
                 key:'recruiter_id'

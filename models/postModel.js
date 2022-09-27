@@ -13,7 +13,7 @@ Post.init(
             allowNull:false
         },
         recruiter_id:{
-            type:DataTypes.INTEGER,
+            type:DataTypes.UUID,
             references:{
                 model:'recruiter',
                 key:'recruiter_id'

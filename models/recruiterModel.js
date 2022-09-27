@@ -7,10 +7,10 @@ class Recruiter extends Model{}
 Recruiter.init(
     {
         recruiter_id:{
-            type:DataTypes.INTEGER,
+            type:DataTypes.UUID,
+            defaultValue:DataTypes.UUIDV4,
             allowNull:false,
             primaryKey:true,
-            autoIncrement:true
         },
         company_id:{
             type:DataTypes.INTEGER,

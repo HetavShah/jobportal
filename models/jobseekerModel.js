@@ -7,8 +7,8 @@ class Jobseeker extends Model{}
 Jobseeker.init(
     {
         jobseeker_id:{
-            type:DataTypes.INTEGER,
-            autoIncrement:true,
+            type:DataTypes.UUID,
+            defaultValue:DataTypes.UUIDV4,
             allowNull:false,
             primaryKey:true,
         },
