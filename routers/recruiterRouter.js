@@ -15,6 +15,7 @@ recruiterRouter
 .route('/:id')
 .get(protectRoute,getRecruiterById);
 
+
 recruiterRouter
 .route('/logout')
 .get(logout);

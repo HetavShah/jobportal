@@ -72,7 +72,7 @@ module.exports.login = async function login(req, res) {
           email: givenEmail,
         },
       });
-
+      if(user)
       id = user.jobseeker_id;
       userType = "jobseeker";
     } else if (req.baseUrl == "/recruiter") {
@@ -116,28 +116,27 @@ module.exports.protectRoute = async function protectRoute(req, res, next) {
   try {
     if (req.cookies.login) {
       let token = req.cookies.login;
-      let id = jwt.verify(token, JWT_KEY);
-      console.log(id.payload);
+      let id = jwt.verify(token, JWT_KEY).payload; // if sucessfull verification then jwt.verify will return payload which contains over userId
+      // console.log(id.payload);
       let user;
       if (req.baseUrl == "/jobseeker") {
         user = await jobseekerModel.findOne({
           where: {
-            jobseeker_id: id.payload,
+            jobseeker_id: id,
           },
         });
       } else if (req.baseUrl == "/recruiter") {
         user = await recruiterModel.findOne({
           where: {
-            recruiter_id: id.payload,
+            recruiter_id: id,
           },
         });
       }
-      console.log(req.params.id);
-      if (user && id.payload==req.params.id) {
+      if (user && id==req.params.id) {
         next();
       } else {
         return res.status(401).json({
-          message: "Invalid User",
+          message: "User Not Available or Unauthorized Access",
         });
       }
     } else {
