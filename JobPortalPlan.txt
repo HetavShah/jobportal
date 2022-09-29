@@ -35,6 +35,7 @@ protectRoute -> After login only ( middleware )
 /jobseeker/:id/education
 get -> get Particular jobseeker's Education Details
 post -> Create Particular Jobseeker's Education Details
+/jobseeker/:id/:eduid
 patch -> Update Education Details
 delete -> Delete Education Details
 
@@ -44,6 +45,8 @@ protectRoute -> After login only ( middleware )
 /jobseeker/:id/experience
 get  ( Similar to Education )
 post
+
+/jobseeker/:id/:expid
 patch
 delete
 

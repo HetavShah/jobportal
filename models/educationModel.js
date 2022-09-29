@@ -10,7 +10,13 @@ Education.init(
                 model:'jobseeker',
                 key:'jobseeker_id'
             },
-            allowNull:false
+            allowNull:false,
+        },
+        edu_id:{
+            type:DataTypes.UUID,
+            allowNull:false,
+            defaultValue:DataTypes.UUIDV4,
+            primaryKey:true
         },
         university_name:{
             type:DataTypes.STRING,

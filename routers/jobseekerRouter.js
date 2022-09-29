@@ -12,17 +12,11 @@ const {
   deleteJobseekerById,
 } = require("../controllers/jobseekerController");
 const {
-  getEducationDetails,
-  createEducationDetails,
-  updateEducationDetails,
-  deleteEducationDetails,
-} = require("../controllers/educationController");
-const {
-  getExperienceDetails,
-  createExperienceDetails,
-  updateExperienceDetails,
-  deleteExperienceDetails,
-} = require("../controllers/experienceController");
+  getProfileDetails,
+  createProfileDetails,
+  updateProfileDetails,
+  deleteProfileDetails,
+} = require("../controllers/profileController");
 const {
   getSkills,
   addSkills,
@@ -41,9 +35,13 @@ jobseekerRouter //Auth Routes
   .route("/signup")
   .post(signup);
 
-jobseekerRouter.route("/login").post(login);
+jobseekerRouter
+.route("/login").
+post(login);
 
-jobseekerRouter.route("/logout").get(logout);
+jobseekerRouter
+.route("/logout")
+.get(logout);
 
 jobseekerRouter //Basic Profile CRUD Routes
   .route("/:id")
@@ -51,19 +49,25 @@ jobseekerRouter //Basic Profile CRUD Routes
   .patch(protectRoute, updateJobseekerById)
   .delete(protectRoute, deleteJobseekerById);
 
-jobseekerRouter //Education Details CRUD Routes
-  .route("/:id/education")
-  .get(protectRoute, getEducationDetails)
-  .post(protectRoute, createEducationDetails)
-  .patch(protectRoute, updateEducationDetails)
-  .delete(protectRoute, deleteEducationDetails)
+jobseekerRouter
+.route("/:id/education") //Education Details CRUD Routes
+.get(protectRoute, getProfileDetails)
+.post(protectRoute, createProfileDetails)
+
+jobseekerRouter
+  .route("/:id/education/:eduid")
+  .patch(protectRoute, updateProfileDetails)
+  .delete(protectRoute, deleteProfileDetails)
 
 jobseekerRouter //Experience Details CRUD Routes
-  .route("/:id/experience")
-  .get(protectRoute, getExperienceDetails)
-  .post(protectRoute, createExperienceDetails)
-  .patch(protectRoute, updateExperienceDetails)
-  .delete(protectRoute, deleteExperienceDetails);
+.route("/:id/experience")
+.get(protectRoute, getProfileDetails)
+.post(protectRoute, createProfileDetails)
+
+jobseekerRouter 
+  .route("/:id/experience/:expid")
+  .patch(protectRoute, updateProfileDetails)
+  .delete(protectRoute, deleteProfileDetails);
 
 jobseekerRouter //Skill Details CRUD Routes
   .route("/:id/skills")

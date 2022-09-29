@@ -10,7 +10,11 @@ Experience.init(
                 model:'jobseeker',
                 key:'jobseeker_id'
             },
-            allowNull:false,
+        },
+        exp_id:{
+            type:DataTypes.UUID,
+            defaultValue:DataTypes.UUIDV4,
+            primaryKey:true
         },
         descrip:{
             type:DataTypes.STRING,
