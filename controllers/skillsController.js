@@ -9,6 +9,12 @@ module.exports.getSkills=async function getSkills(req,res) {
         let id=req.params.id;
 
         let user=await JobseekerSKillModel.findAll({
+            include:[{
+                model:SkillsetModel,
+            }],
+            attributes:{
+                exclude:["skillset_id"]
+            },
             where:{
                 jobseeker_id:id
             }
@@ -36,18 +42,22 @@ module.exports.addSkills=async function addSkills(req,res) {
             where:{
                 skill_name:skill_name
             }
-        })
-        let dataCreated;
+        });
+
+        
         if(!skill){
             skill=await SkillsetModel.create({
                 skill_name:skill_name
             });
         }
-          data["skillset_id"]=skill[skillset_id];
-          data["jobseeker_id"]=id;
+        data["skillset_id"]=skill[skillset_id];
+        data["jobseeker_id"]=id;
+        
+            let dataCreated;
              dataCreated= await JobseekerSKillModel.create(data);
                 return res.json({
-                    message:"Data Created Successfully"
+                    message:"Data Created Successfully",
+                   data:dataCreated
                 });
 
     }catch(error){

@@ -93,6 +93,8 @@ module.exports.deleteJobseekerById=async function deleteJobseeekerById(req,res){
 
         if(user){
 
+            
+
           await JobseekerModel.destroy({
                 where:{
                     jobseeker_id:id
