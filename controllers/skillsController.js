@@ -1,28 +1,35 @@
 const SkillsetModel=require("../models/skillsetModel");
 const JobseekerModel=require("../models/jobseekerModel");
 const JobseekerSKillModel=require("../models/jobseekerSkilllModel");
+const sequelize = require("../config/database");
 
 
 module.exports.getSkills=async function getSkills(req,res) {  
     try{
 
         let id=req.params.id;
-
-        let user=await JobseekerSKillModel.findAll({
-            include:[{
-                model:SkillsetModel,
-            }],
-            attributes:{
-                exclude:["skillset_id"]
-            },
-            where:{
-                jobseeker_id:id
-            }
-        });
-        return res.json({
-            details:user
+        let data=await JobseekerModel.findAll({
+            include:SkillsetModel,      //Eager Loading
+            raw:true,
+            attributes:[]
         })
-
+        // console.log(data);
+        let newData=[]
+        // data.forEach((val)=>{
+        //     console.log(val["skillsets.skillset_id"]);
+        // })
+        data.forEach((val)=>{
+            let retrievedData={}
+            retrievedData["skill_name"] =val["skillsets.skill_name"];
+         retrievedData["skill_level"] =val["skillsets.jobseeker_skill.skill_level"];
+         newData.push(retrievedData);
+        })
+        
+        return res.json({
+            message:"data Retrieved Successfully",
+            data:newData
+        })
+        
     }
     catch(error){
         return res.status(422).json({
@@ -50,7 +57,7 @@ module.exports.addSkills=async function addSkills(req,res) {
                 skill_name:skill_name
             });
         }
-        data["skillset_id"]=skill[skillset_id];
+        data["skillset_id"]=skill["skillset_id"];
         data["jobseeker_id"]=id;
         
             let dataCreated;
@@ -111,6 +118,7 @@ module.exports.updateSkills=async function updateSkills(req,res) {
  }
 module.exports.deleteSkills=async function deleteSkills(req,res) { 
     let skillTobeDeleted=req.body.skill_name;
+    
 
     try{
 
