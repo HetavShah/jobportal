@@ -1,5 +1,7 @@
 const { Sequelize, DataTypes, Model } = require("sequelize");
 const sequelize = require("../config/database");
+const JobType=require('./jobTypeModel');
+const JobLocation=require('./jobLocationModel');
 class Job extends Model{}
 
 Job.init(
@@ -10,36 +12,16 @@ Job.init(
             primaryKey:true,
             autoIncrement:true
         },
-        company_id:{
-            type:DataTypes.INTEGER,
-            references:{
-                model:'company',
-                key:'company_id'
-            },
-            allowNull:false
-        },
-        type_id:{
-            type:DataTypes.INTEGER,
-            references:{
-                model:'jobtype',
-                key:'type_id'
-            },
-            allowNull:false
-        },
-        location_id:{
-            type:DataTypes.INTEGER,
-            references:{
-                model:'joblocation',
-                key:'location_id'
-            },
-            allowNull:false
-        },
         descrip:{
             type:DataTypes.STRING,
             allowNull:false
         },
         is_active:{
             type:DataTypes.BOOLEAN,
+            allowNull:false
+        },
+        post_date:{
+            type:DataTypes.DATE,
             allowNull:false
         }
 
@@ -56,11 +38,29 @@ Job.init(
 
 Job.removeAttribute('id');
 
-Job.sync().then(function () { 
-    console.log("Job Table Created Successfully");
-})
-.catch(function(err){
-console.log(err);
-})
+JobType.hasMany(Job,{
+    foreignKey:'type_id',
+    onDelete:'CASCADE',
+    onUpdate:'CASCADE'
+});
+Job.belongsTo(JobType,{
+    foreignKey:'type_id',
+    onDelete:'CASCADE',
+    onUpdate:'CASCADE'
+});
+
+
+JobLocation.hasMany(Job,{
+    foreignKey:'location_id',
+    onDelete:'CASCADE',
+    onUpdate:'CASCADE'
+});
+Job.belongsTo(JobLocation,{
+    foreignKey:'location_id',
+    onDelete:'CASCADE',
+    onUpdate:'CASCADE'
+});
+
+
 
 module.exports=Job;

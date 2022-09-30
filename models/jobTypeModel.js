@@ -1,5 +1,6 @@
 const { Sequelize, DataTypes, Model } = require("sequelize");
 const sequelize = require("../config/database");
+const jobModel=require('./jobModel');
 class JobType extends Model{}
 
 JobType.init(
@@ -27,11 +28,8 @@ JobType.init(
 )
 JobType.removeAttribute('id');
 
-JobType.sync().then(function () { 
-    console.log("JobType Table Created Successfully");
-})
-.catch(function(err){
-console.log(err);
-})
+
+
+
 
 module.exports=JobType;

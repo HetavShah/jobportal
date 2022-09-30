@@ -1,5 +1,6 @@
 const { Sequelize, DataTypes, Model } = require("sequelize");
 const sequelize = require("../config/database");
+const jobModel=require('./jobModel');
 class JobLocation extends Model{}
 
 JobLocation.init(
@@ -42,12 +43,5 @@ JobLocation.init(
 )
 
 JobLocation.removeAttribute('id');
-
-JobLocation.sync().then(function () { 
-    console.log("JobLocation Table Created Successfully");
-})
-.catch(function(err){
-console.log(err);
-})
 
 module.exports=JobLocation;

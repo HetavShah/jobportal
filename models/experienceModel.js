@@ -1,16 +1,10 @@
 const { Sequelize, DataTypes, Model } = require("sequelize");
 const sequelize = require("../config/database");
+const jobseekerModel=require('./jobseekerModel');
 class Experience extends Model{}
 
 Experience.init(
     {
-        jobseeker_id:{
-            type:DataTypes.UUID,
-            references:{
-                model:'jobseeker',
-                key:'jobseeker_id'
-            },
-        },
         exp_id:{
             type:DataTypes.UUID,
             defaultValue:DataTypes.UUIDV4,
@@ -48,11 +42,17 @@ Experience.init(
 )
 Experience.removeAttribute('id');
 
-Experience.sync().then(function () { 
-    console.log("Experience Table Created Successfully");
-})
-.catch(function(err){
-console.log(err);
-})
+jobseekerModel.hasMany(Experience,{
+    foreignKey:'jobseeker_id',
+    onDelete:'CASCADE',
+    onUpdate:'CASCADE'
+});
+Experience.belongsTo(jobseekerModel,{
+    foreignKey:'jobseeker_id',
+    onDelete:'CASCADE',
+    onUpdate:'CASCADE'
+});
+
+
 
 module.exports=Experience;

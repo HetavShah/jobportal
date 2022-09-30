@@ -2,6 +2,7 @@ const { Sequelize, DataTypes, Model } = require("sequelize");
 const sequelize = require("../config/database");
 const {phone} = require('phone');
 const bcrypt=require('bcrypt');
+const jobModel=require('./jobModel');
 class Recruiter extends Model{}
 
 Recruiter.init(
@@ -82,14 +83,16 @@ Recruiter.init(
 
 Recruiter.removeAttribute('id');
 
-Recruiter.sync()
-.then(function () { 
-    console.log("Recruiter Table Created Successfully");
-})
-.catch(function(err){
-    console.log(err);
-    })
-    
+Recruiter.hasMany(jobModel,{
+    foreignKey:'recruiter_id',
+    onDelete:'CASCADE',
+    onUpdate:'CASCADE'
+});
+jobModel.belongsTo(Recruiter,{
+    foreignKey:'recruiter_id',
+    onDelete:'CASCADE',
+    onUpdate:'CASCADE'
+});
 
 Recruiter.beforeCreate(async function HashPassword(user,options){
     let salt=await bcrypt.genSalt();

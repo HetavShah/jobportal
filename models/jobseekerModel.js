@@ -89,10 +89,5 @@ Jobseeker.beforeCreate(async function HashPassword(user,options){
     //   console.log(hashedString);
 
 })
-Jobseeker.sync().then(function () { 
-    console.log("Jobseeker Table Created Successfully");
-})
-.catch(function(err){
-console.log(err);
-})
+
 module.exports=Jobseeker;

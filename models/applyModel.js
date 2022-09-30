@@ -1,5 +1,7 @@
 const { Sequelize, DataTypes, Model } = require("sequelize");
 const sequelize = require("../config/database");
+const jobModel=require('./jobModel');
+const jobseekerModel=require('./jobseekerModel');
 class Apply extends Model{}
 
 Apply.init(
@@ -37,11 +39,22 @@ Apply.init(
 
 Apply.removeAttribute('id');
 
-Apply.sync().then(function () { 
-    console.log("Apply Table Created Successfully");
-})
-.catch(function(err){
-console.log(err);
-})
+jobseekerModel.belongsToMany(jobModel, {
+  through: Apply,
+  unique: false,
+  foreignKey: "jobseeker_id",
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
+});
+
+jobModel.belongsToMany(jobseekerModel, {
+  through: Apply,
+  unique: false,
+  foreignKey: "job_id",
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
+});
+
+
 
 module.exports=Apply;

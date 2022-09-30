@@ -27,11 +27,4 @@ Skillset.init(
 )
 Skillset.removeAttribute('id');
 
-Skillset.sync().then(function () { 
-    console.log("Skillset Table Created Successfully");
-})
-.catch(function(err){
-console.log(err);
-})
-
 module.exports=Skillset;

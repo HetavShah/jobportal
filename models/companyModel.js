@@ -1,5 +1,7 @@
 const { Sequelize, DataTypes, Model, UniqueConstraintError } = require("sequelize");
 const sequelize = require("../config/database");
+const recruiterModel=require('./recruiterModel');
+const jobModel=require('./jobModel');
 class Company extends Model{}
 
 Company.init(
@@ -41,10 +43,15 @@ Company.init(
 )
 Company.removeAttribute('id');
 
-Company.sync().then(function () { 
-    console.log("Company Table Created Successfully");
-})
-.catch(function(err){
-console.log(err);
-})
+Company.hasMany(recruiterModel,{
+    foreignKey:'company_id',
+    onDelete:'CASCADE',
+    onUpdate:'CASCADE'
+});
+recruiterModel.belongsTo(Company,{
+    foreignKey:'company_id',
+    onDelete:'CASCADE',
+    onUpdate:'CASCADE'
+});
+
 module.exports=Company;

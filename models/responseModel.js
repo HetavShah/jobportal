@@ -41,11 +41,5 @@ Response.init(
 
 Response.removeAttribute('id');
 
-Response.sync().then(function () { 
-    console.log("Response Table Created Successfully");
-})
-.catch(function(err){
-console.log(err);
-})
 
 module.exports=Response;
