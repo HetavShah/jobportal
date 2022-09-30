@@ -28,6 +28,7 @@ module.exports.syncTables=async function syncTables(){
         await applyModel.sync({force:true});
         await responseModel.sync({force:true});
         await jobReqSkillModel.sync({force:true});
+        console.log("All Tables Created Successfully");
     }catch(error){
         console.log(error.message);
     }
