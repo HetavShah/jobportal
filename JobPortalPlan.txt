@@ -92,7 +92,7 @@ get-> see the jobseeker applied for particular job
 post-> create the job response for a particular job
 patch-> update response details
 
-----------------------------------------------------------
+---------------------------------------------------------
 
 
 
