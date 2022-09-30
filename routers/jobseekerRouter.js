@@ -85,7 +85,9 @@ jobseekerRouter
   .post(protectRoute, applyForJob)
   .delete(protectRoute, deleteJobApplication);
 
-jobseekerRouter.route("/:id/response").get(protectRoute, allJobResponse);
+jobseekerRouter
+.route("/:id/response")
+.get(protectRoute, allJobResponse);
 
 jobseekerRouter
   .route("/:id/response/:jobid")

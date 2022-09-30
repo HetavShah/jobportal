@@ -78,9 +78,6 @@ post -> signup a recruiter with company details
 /recruiter/login
 post -> Login a recruiter
 
-ProtectRoute 
-/recruiter/:id/company
-post -> Create Details of the company for a particular recruiter
 
 /recruiter/:id/job/
 post -> post a job
