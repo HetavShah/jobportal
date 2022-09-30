@@ -5,6 +5,10 @@ class Experience extends Model{}
 
 Experience.init(
     {
+        jobseeker_id:{
+            type:DataTypes.UUID,
+            allowNull:false
+        },
         exp_id:{
             type:DataTypes.UUID,
             defaultValue:DataTypes.UUIDV4,

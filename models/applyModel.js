@@ -8,10 +8,6 @@ Apply.init(
     {
         jobseeker_id:{
             type:DataTypes.UUID,
-            references:{
-                model:'jobseeker',
-                key:'jobseeker_id'
-            },
             allowNull:false
         },
         job_id:{
@@ -45,6 +41,7 @@ jobseekerModel.belongsToMany(jobModel, {
   foreignKey: "jobseeker_id",
   onDelete: "CASCADE",
   onUpdate: "CASCADE",
+ 
 });
 
 jobModel.belongsToMany(jobseekerModel, {

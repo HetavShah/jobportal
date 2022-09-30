@@ -1,24 +1,21 @@
 const { Sequelize, DataTypes, Model } = require("sequelize");
 const sequelize = require("../config/database");
+const jobseekerModel=require('./jobseekerModel')
+const jobModel=require('./jobModel');
 class Response extends Model{}
 
 Response.init(
     {
         jobseeker_id:{
             type:DataTypes.UUID,
-            references:{
-                model:'jobseeker',
-                key:'jobseeker_id'
-            },
             allowNull:false
         },
         job_id:{
             type:DataTypes.INTEGER,
-            references:{
-                model:'job',
-                key:'job_id'
-            },
             allowNull:false
+        },
+        is_selected:{
+            type:DataTypes.BOOLEAN
         },
         recruiter_id:{
             type:DataTypes.UUID,
@@ -26,7 +23,9 @@ Response.init(
                 model:'recruiter',
                 key:'recruiter_id'
             },
-            allowNull:false
+            onDelete:'CASCADE',
+            onUpdate:'CASCADE',
+            allowNull:false           
         }
     },
     {
@@ -38,6 +37,24 @@ Response.init(
         underscore: false,
     }
 )
+
+jobseekerModel.belongsToMany(jobModel, {
+    through: Response,
+    unique: false,
+    foreignKey: "jobseeker_id",
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
+  });
+  
+  jobModel.belongsToMany(jobseekerModel, {
+    through: Response,
+    unique: false,
+    foreignKey: "job_id",
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
+  });
+
+
 
 Response.removeAttribute('id');
 

@@ -8,18 +8,10 @@ JobseekerSkill.init(
   {
     skillset_id: {
       type: DataTypes.INTEGER,
-      references: {
-        model: "skillset",
-        key: "skillset_id",
-      },
       allowNull: false,
     },
     jobseeker_id: {
       type: DataTypes.UUID,
-      references: {
-        model: "jobseeker",
-        key: "jobseeker_id",
-      },
       allowNull: false,
     },
     skill_level: {

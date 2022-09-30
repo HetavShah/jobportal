@@ -15,12 +15,7 @@ Recruiter.init(
         },
         company_id:{
             type:DataTypes.INTEGER,
-            references:{
-                model:'company',
-                key:'company_id'
-            },
             allowNull:false
-
         },
         first_name:{
             type:DataTypes.STRING,

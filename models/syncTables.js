@@ -15,19 +15,19 @@ const responseModel = require("./responseModel");
 
 module.exports.syncTables=async function syncTables(){
     try{
-        await jobseekerModel.sync({force:true});
-        await educationModel.sync({force:true});
-        await experienceModel.sync({force:true});
-        await companyModel.sync({force:true});
-        await recruiterModel.sync({force:true});
-        await skillsetModel.sync({force:true});
-        await jobseekerSkillModel.sync({force:true});
-        await jobTypeModel.sync({force:true});
-        await jobLocationModel.sync({force:true});
-        await jobModel.sync({force:true});
-        await applyModel.sync({force:true});
-        await responseModel.sync({force:true});
-        await jobReqSkillModel.sync({force:true});
+        await jobseekerModel.sync();
+        await educationModel.sync();
+        await experienceModel.sync();
+        await companyModel.sync();
+        await recruiterModel.sync();
+        await skillsetModel.sync();
+        await jobseekerSkillModel.sync();
+        await jobTypeModel.sync();
+        await jobLocationModel.sync();
+        await jobModel.sync();
+        await applyModel.sync();
+        await responseModel.sync();
+        await jobReqSkillModel.sync();
         console.log("All Tables Created Successfully");
     }catch(error){
         console.log(error.message);

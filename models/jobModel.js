@@ -6,6 +6,19 @@ class Job extends Model{}
 
 Job.init(
     {
+        location_id:{
+            type:DataTypes.INTEGER,
+            allowNull:false
+
+        },
+        type_id:{
+            type:DataTypes.INTEGER,
+            allowNull:false
+        },
+        recruiter_id:{
+                type:DataTypes.UUID,
+                allowNull:false
+            } , 
         job_id:{
             type:DataTypes.INTEGER,
             allowNull:false,

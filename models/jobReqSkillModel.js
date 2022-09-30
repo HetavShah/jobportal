@@ -8,18 +8,10 @@ JobReqSkill.init(
     {
         skillset_id:{
             type:DataTypes.INTEGER,
-            references:{
-                model:'skillset',
-                key:'skillset_id'
-            },
             allowNull:false
         },
         job_id:{
             type:DataTypes.INTEGER,
-            references:{
-                model:'job',
-                key:'job_id'
-            },
             allowNull:false
         },
         

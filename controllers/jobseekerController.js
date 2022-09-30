@@ -80,8 +80,6 @@ module.exports.updateJobseekerById=async function updateJobseeekerById(req,res){
 
 module.exports.deleteJobseekerById=async function deleteJobseeekerById(req,res){
 
-    //Deleting Education Details , Experience Details etc is still remaining
-
     let id=req.params.id;
     try{
 

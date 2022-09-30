@@ -5,6 +5,10 @@ class Education extends Model{}
 
 Education.init(
     {
+        jobseeker_id:{
+            type:DataTypes.UUID,
+            allowNull:false
+        },
         edu_id:{
             type:DataTypes.UUID,
             allowNull:false,
