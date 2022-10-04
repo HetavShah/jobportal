@@ -18,7 +18,9 @@ app.get('/',function startUp(req,res){
 app.use('/jobseeker',jobseekerRouter);
 app.use('/recruiter',recruiterRoute);
 app.get('*', function(req, res){
-    res.status(404).send('Page Not Found');
+    res.status(404).json({
+        message:'Page Not Found'
+    });
   });
 
 const initApp = async () => {
