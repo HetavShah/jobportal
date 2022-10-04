@@ -23,7 +23,7 @@ const initApp = async () => {
     try {
         await db.authenticate();
         console.log("Database Connected");
-        app.listen(port, () => {
+        app.listen(process.env.PORT || 3000, () => {
             console.log(`Server is up and running at: http://localhost:${port}`);
         });
     } catch (error) {
