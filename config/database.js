@@ -1,5 +1,5 @@
 const Sequelize=require('sequelize');
-const DB_LINK='postgres://hapbdmvaeqicms:934c2288979db9191815178af8fef4676123efecad8538e91d742a67d4bf422d@ec2-54-209-66-211.compute-1.amazonaws.com:5432/d1kqvdl0ca6ojj'
+const {DB_LINK}=require('../secrets');
 const sequelize = new Sequelize(DB_LINK,{
   "dialectOptions": {
           "ssl": {
