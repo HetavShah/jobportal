@@ -8,6 +8,13 @@ const {syncTables}=require('./models/syncTables');
 const cookieParser=require('cookie-parser');
 app.use(express.json());
 app.use(cookieParser());
+app.get('/',function startUp(req,res){
+
+    return res.json({
+        message:"Home Page"
+    })
+
+})
 app.use('/jobseeker',jobseekerRouter);
 app.use('/recruiter',recruiterRoute);
 
