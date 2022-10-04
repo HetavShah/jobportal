@@ -55,9 +55,10 @@ jobModel.belongsToMany(jobseekerModel, {
 
 Apply.afterCreate(async function AddtoResponse(apply,option){
 try{
+    // console.log(apply);
 
     let data={
-        jobseeeker_id:apply["jobseeker_id"],
+        jobseeker_id:apply["jobseeker_id"],
         job_id:apply["job_id"],
     }
     let job=await jobModel.findOne({
@@ -68,6 +69,7 @@ try{
     })
     data["recruiter_id"]=job["recruiter_id"];
     await ResponseModel.create(data);
+    // console.log(data);
 
 }
 catch(error){

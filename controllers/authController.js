@@ -81,7 +81,7 @@ module.exports.login = async function login(req, res) {
           email: givenEmail,
         },
       });
-
+      if(user)
       id = user.recruiter_id;
       userType = "recruiter";
     }

@@ -43,6 +43,10 @@ jobseekerRouter
 .route("/logout")
 .get(logout);
 
+jobseekerRouter 
+  .route("/job")
+  .get(allJobs);
+
 jobseekerRouter //Basic Profile CRUD Routes
   .route("/:id")
   .get(protectRoute, getUserById)
@@ -76,12 +80,9 @@ jobseekerRouter //Skill Details CRUD Routes
   .patch(protectRoute, updateSkills)
   .delete(protectRoute, deleteSkills);
 
-jobseekerRouter //Job Apply Routes
-  .route("/jobs")
-  .get(allJobs);
 
 jobseekerRouter
-  .route("/:id/apply/:jobid")
+  .route("/:id/apply/:jobid")   //Job Apply Routes
   .post(protectRoute, applyForJob)
   .delete(protectRoute, deleteJobApplication);
 
