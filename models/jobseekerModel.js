@@ -87,7 +87,15 @@ Jobseeker.beforeCreate(async function HashPassword(user,options){
     user.password=hashedString;
     //   console.log(user.password);
     //   console.log(hashedString);
-
 })
+// Jobseeker.beforeUpdate(async function updateIfPassword(user,options) {       //Update Password with hash password
+//     if(user.password)
+//     {
+//         let salt=bcrypt.genSalt();
+//         let hashedString= await bcrypt.hash(user.password,salt);
+//         user.password=hashedString;
+        
+//     }
+//   })
 
 module.exports=Jobseeker;

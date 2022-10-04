@@ -7,10 +7,10 @@ const {
   logout,
 } = require("../controllers/authController");
 const {
-  getJobseekerById,
-  updateJobseekerById,
-  deleteJobseekerById,
-} = require("../controllers/jobseekerController");
+  getUserById,
+  updateUserById,
+  deleteUserById,
+} = require("../controllers/userController");
 const {
   getProfileDetails,
   createProfileDetails,
@@ -45,9 +45,9 @@ jobseekerRouter
 
 jobseekerRouter //Basic Profile CRUD Routes
   .route("/:id")
-  .get(protectRoute, getJobseekerById)
-  .patch(protectRoute, updateJobseekerById)
-  .delete(protectRoute, deleteJobseekerById);
+  .get(protectRoute, getUserById)
+  .patch(protectRoute, updateUserById)
+  .delete(protectRoute, deleteUserById);
 
 jobseekerRouter
 .route("/:id/education") //Education Details CRUD Routes

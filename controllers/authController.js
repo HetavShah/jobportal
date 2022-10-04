@@ -125,12 +125,14 @@ module.exports.protectRoute = async function protectRoute(req, res, next) {
             jobseeker_id: id,
           },
         });
+        req["user"]='jobseeker'
       } else if (req.baseUrl == "/recruiter") {
         user = await recruiterModel.findOne({
           where: {
             recruiter_id: id,
           },
         });
+        req["user"]='recruiter'
       }
       if (user && id==req.params.id) {
         next();

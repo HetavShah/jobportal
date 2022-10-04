@@ -2,6 +2,7 @@ const { Sequelize, DataTypes, Model } = require("sequelize");
 const sequelize = require("../config/database");
 const jobModel=require('./jobModel');
 const jobseekerModel=require('./jobseekerModel');
+const ResponseModel=require('./responseModel');
 class Apply extends Model{}
 
 Apply.init(
@@ -52,6 +53,27 @@ jobModel.belongsToMany(jobseekerModel, {
   onUpdate: "CASCADE",
 });
 
+Apply.afterCreate(async function AddtoResponse(apply,option){
+try{
 
+    let data={
+        jobseeeker_id:apply["jobseeker_id"],
+        job_id:apply["job_id"],
+    }
+    let job=await jobModel.findOne({
+
+        where:{
+            job_id:apply["job_id"]
+        }
+    })
+    data["recruiter_id"]=job["recruiter_id"];
+    await ResponseModel.create(data);
+
+}
+catch(error){
+    console.log(error.message);
+}
+
+})
 
 module.exports=Apply;
