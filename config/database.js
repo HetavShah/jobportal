@@ -1,5 +1,6 @@
 const Sequelize=require('sequelize');
-const {DB_LINK}=require('../secrets');
+require('dotenv').config();
+const DB_LINK=process.env.DB_LINK;
 const sequelize = new Sequelize(DB_LINK,{
   "dialectOptions": {
           "ssl": {

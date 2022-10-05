@@ -1,7 +1,9 @@
 const jobseekerModel = require("../models/jobseekerModel");
 const recruiterModel = require("../models/recruiterModel");
+const dotenv=require('dotenv');
+dotenv.config();
 const companyModel = require("../models/companyModel");
-const { JWT_KEY } = require("../secrets");
+const JWT_KEY = process.env.JWT_KEY;
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
