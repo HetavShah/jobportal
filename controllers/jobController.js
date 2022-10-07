@@ -309,10 +309,12 @@ module.exports.candidateSelection = async function candidateSelection(
     };
     let id = req.params.id;
     let jobId = req.params.jobid;
+    let jsId=req.params.jsid;
     let [updatedData] = await Response.update(selectionValue, {
       where: {
         recruiter_id: id,
         job_id: jobId,
+        jobseeker_id:jsId
       },
     });
     if (updatedData) {

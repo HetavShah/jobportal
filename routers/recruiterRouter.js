@@ -39,6 +39,9 @@ recruiterRouter
 recruiterRouter
 .route('/:id/job/:jobid/response')
 .get(protectRoute,getAllCandidateDetails)
+
+recruiterRouter
+.route('/:id/job/:jobid/response/:jsid')
 .post(protectRoute,candidateSelection)
 .patch(protectRoute,candidateSelection)
 
