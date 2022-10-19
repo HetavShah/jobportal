@@ -37,6 +37,12 @@ module.exports.allJobs = async function allJobs(req, res) {
             attributes:{
               exclude:['recruiter_id','reg_date','email','password','company_id']
             }
+          },
+          {
+            model:Skillset,
+            through:{
+              attributes:[]
+            }
           }
       ],
       attributes:{
@@ -187,9 +193,32 @@ module.exports.jobPostedByRecId = async function jobPostedByRecId(req, res) {
 
     if (req.user == "recruiter") {
       let jobs = await JobModel.findAll({
+        include:[
+          {
+          model:LocationModel,
+          attributes:{
+            exclude:['location_id']
+          }
+        },
+        {
+          model:TypeModel,
+          attributes:{
+            exclude:['type_id']
+          }
+        },
+        {
+          model:Skillset,
+          through:{
+            attributes:[]
+          },
+          attributes:{
+            exclude:['skillset_id']
+          }
+        }],
         where: {
           recruiter_id: id,
         },
+        exclude:['location_id','type_id','skillset_id']
       });
 
       return res.json({
@@ -206,6 +235,8 @@ module.exports.createJob = async function createJob(req, res) {
   let locationInfo = req.body["location"];
   let jobTypeInfo = req.body["type"];
   let jobDetails = req.body["job"];
+  let skillDetails=req.body["skills"];
+  let JobReqSkills;
 
   try {
     let Location = await LocationModel.create(locationInfo);
@@ -214,6 +245,26 @@ module.exports.createJob = async function createJob(req, res) {
     jobDetails["type_id"] = Type["type_id"];
     jobDetails["recruiter_id"]=req.params.id;
     let Job =await  JobModel.create(jobDetails);
+
+//------------------------JOBREQSKILL TABLE FILL -------------------------
+    skillDetails.forEach(async element=>{
+
+      JobReqSkills=await Skillset.findOne({
+        where:{
+          skill_name:element["skill_name"]
+        }
+      });
+      if(!JobReqSkills)
+      {
+        JobReqSkills=await Skillset.create(element);
+      }
+      let data={};
+      data["job_id"]=Job["job_id"];
+      data["skillset_id"]=JobReqSkills["skillset_id"];
+      // console.log(data);
+      await JobReqModel.create(data);
+    })
+//------------------------------------------------------------------------
 
     return res.json({
       message: "Job Created Successfully",
