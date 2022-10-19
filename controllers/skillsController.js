@@ -11,7 +11,10 @@ module.exports.getSkills=async function getSkills(req,res) {
         let data=await JobseekerModel.findAll({
             include:SkillsetModel,      //Eager Loading
             raw:true,
-            attributes:[]
+            attributes:[],
+            where:{
+                    jobseeker_id:id
+            }
         })
         // console.log(data);
         let newData=[]
