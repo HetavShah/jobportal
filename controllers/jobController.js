@@ -6,12 +6,41 @@ const JobReqModel = require("../models/jobReqSkillModel");
 const LocationModel = require("../models/jobLocationModel");
 const TypeModel = require("../models/jobTypeModel");
 const Response = require("../models/responseModel");
-
+const companyModel=require('../models/companyModel');
 /* ------------------------ JOBSEEKER JOB CONTROLLER ------------------------------ */
 
 module.exports.allJobs = async function allJobs(req, res) {
   try {
-    let data = await JobModel.findAll();
+    let data = await JobModel.findAll(
+      {
+        include:[
+          {
+            model:LocationModel,
+            attributes:['street_name','city','state','pincode']
+          },
+          {
+            model:TypeModel,
+            attributes:['job_type']
+          },
+          {
+            model:RecruiterModel,
+            include:[{
+              model:companyModel,
+              attributes:{
+                exclude:['company_id']
+              }
+            }],
+            attributes:{
+              exclude:['recruiter_id','reg_date','email','password','company_id']
+            }
+          }
+      ],
+      attributes:{
+        exclude:['location_id','type_id','recruiter_id']
+      }
+        
+      }
+    );
 
     return res.json({
       message: "Job Details",
