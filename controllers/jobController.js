@@ -7,6 +7,10 @@ const LocationModel = require("../models/jobLocationModel");
 const TypeModel = require("../models/jobTypeModel");
 const Response = require("../models/responseModel");
 const companyModel=require('../models/companyModel');
+const EducationModel=require('../models/educationModel');
+const ExperienceModel=require('../models/experienceModel');
+const JobseekerSkillModel=require('../models/jobseekerSkilllModel');
+const Skillset = require("../models/skillsetModel");
 /* ------------------------ JOBSEEKER JOB CONTROLLER ------------------------------ */
 
 module.exports.allJobs = async function allJobs(req, res) {
@@ -311,9 +315,32 @@ module.exports.getAllCandidateDetails = async function getAllCandidateDetails(
     let data = [];
     for (let i in candidateDetails) {
       let jobseeker_detail = await JobseekerModel.findOne({
+        include:[{
+          model:EducationModel,
+          attributes:{
+            exclude:['jobseeker_id','edu_id']
+          }
+        },{
+         model: ExperienceModel,
+         attributes:{
+          exclude:['jobseeker_id','exp_id']
+         }
+        },{
+          model:Skillset,
+         through:{
+          attributes:['skill_level']
+         },
+         attributes:{
+          exclude:['skillset_id']
+         }
+
+        }],
         where: {
           jobseeker_id: candidateDetails[i]["jobseeker_id"],
         },
+        attributes:{
+          exclude:['email','password','dob','reg_date']
+        }
       });
       data.push(jobseeker_detail);
     }
