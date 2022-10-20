@@ -104,7 +104,7 @@ module.exports.deleteJobApplication = async function deleteJobApplication(
   let userId = req.params.id;
   let jobId = req.params.jobid;
   try {
-    let job = JobModel.findOne({
+    let job = await JobModel.findOne({
       where: {
         job_id: jobId,
       },
