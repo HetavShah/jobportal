@@ -111,14 +111,14 @@ module.exports.deleteJobApplication = async function deleteJobApplication(
     });
 
     if (job) {
-      let deletedData = await ApplyModel.destroy({
+      let deletedData = await ApplyModel.findOne({
         where: {
           jobseeker_id: userId,
           job_id: jobId,
         },
       });
-
-      if (deletedData) {
+    let data= await deletedData.destroy();
+      if (data) {
         return res.json({
           message: "Data Deleted Successfully",
         });

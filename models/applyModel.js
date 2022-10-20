@@ -73,9 +73,23 @@ try{
 
 }
 catch(error){
-    console.log(error.message);
+    console.log(error);
 }
 
+});
+Apply.afterDestroy(async function DeleteFromResponse(apply,option){
+    try{
+
+       let data= await ResponseModel.destroy({
+            where:{
+                job_id:apply["job_id"],
+                jobseeker_id:apply["jobseeker_id"]
+            }
+        })
+        // console.log(data);
+    }catch(error){
+        console.log(error);
+    }
 })
 
 module.exports=Apply;
