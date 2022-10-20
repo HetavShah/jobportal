@@ -42,7 +42,10 @@ module.exports.allJobs = async function allJobs(req, res) {
             model:Skillset,
             through:{
               attributes:[]
-            }
+            },
+           attributes:{
+            exclude:['skillset_id']
+           }
           }
       ],
       attributes:{
