@@ -1,11 +1,11 @@
 const express = require('express');
 const { body } = require('express-validator');
 const BadRequestError = require('../../../common/src/errors/bad-request-error');
-const Job = require('../models/job');
+const Job = require('../../../recruiter/jobs/models/job');
 const validateRequest = require('../../../common/src/middlewares/request-validation');
 const router = express.Router();
-const JobLocation = require('../models/location');
-const JobType = require('../models/type');
+const JobLocation = require('../../../recruiter/jobs/models/location');
+const JobType = require('../../../recruiter/jobs/models/type');
 const Skill = require('../../../skills/models/skill');
 const NotFoundError = require('../../../common/src/errors/not-found-error');
 const Recruiter = require('../../../recruiter/user/models/recruiter');

@@ -6,8 +6,9 @@ const validateRequest = require('../../../common/src/middlewares/request-validat
 const router = express.Router();
 const NotFoundError = require('../../../common/src/errors/not-found-error');
 const Experience=require('../models/experience');
+const requireAuth = require('../../../common/src/middlewares/require-auth');
 router.post(
-  '/api/jobseeker/:id/experience',
+  '/api/jobseeker/:id/experience',requireAuth,
   [
     body('experience').isArray().withMessage('Must be an array'),
     body('experience.*')

@@ -3,7 +3,8 @@ const Jobseeker = require('../../user/models/jobseeker');
 const router = express.Router();
 const NotFoundError = require('../../../common/src/errors/not-found-error');
 const JobseekerSkill = require('../models/jobseeker-skill');
-router.delete('/api/jobseeker/:id/skills/:skillId', async (req, res) => {
+const requireAuth = require('../../../common/src/middlewares/require-auth');
+router.delete('/api/jobseeker/:id/skills/:skillId',requireAuth, async (req, res) => {
   const data = req.body.skills;
   let jobseeker = await Jobseeker.findOne({
     where: {

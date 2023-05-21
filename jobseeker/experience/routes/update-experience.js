@@ -3,9 +3,10 @@ const { body, param } = require('express-validator');
 const validateRequest = require('../../../common/src/middlewares/request-validation');
 const NotFoundError = require('../../../common/src/errors/not-found-error');
 const Experience = require('../models/experience');
+const requireAuth = require('../../../common/src/middlewares/require-auth');
 const router = express.Router();
 router.patch(
-  '/api/jobseeker/:id/experience/:expid',
+  '/api/jobseeker/:id/experience/:expid',requireAuth,
   [
     param('id').isUUID().withMessage('Please Provide valid Jobseeker id'),
     param('expid').isUUID().withMessage('Please Provide valid Experience id'),

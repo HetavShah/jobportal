@@ -11,9 +11,10 @@ const Skill = require('../../../skills/models/skill');
 const Recruiter = require('../../user/models/recruiter');
 const NotFoundError = require('../../../common/src/errors/not-found-error');
 const JobReqSkill = require('../models/req-skill');
+const requireAuth = require('../../../common/src/middlewares/require-auth');
 const JWT_KEY = process.env.JWT_KEY;
 router.post(
-  '/api/recruiter/:id/jobs',
+  '/api/recruiter/:id/jobs',requireAuth,
   [
     body('location.city')
       .isAlpha('en-US', { ignore: [' ', "'"] })

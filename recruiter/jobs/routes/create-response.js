@@ -5,8 +5,9 @@ const validateRequest = require('../../../common/src/middlewares/request-validat
 const router = express.Router();
 const Response=require('../models/response');
 const NotFoundError = require('../../../common/src/errors/not-found-error');
+const requireAuth = require('../../../common/src/middlewares/require-auth');
 router.post(
-  '/api/recruiter/:id/jobs/:jobid/response/:jsid',
+  '/api/recruiter/:id/jobs/:jobid/response/:jsid',requireAuth,
   [
     param("id").isUUID().withMessage("id must be valid"),
     body("is_selected").isBoolean().withMessage("is_selected must be a boolean value")

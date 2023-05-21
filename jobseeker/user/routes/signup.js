@@ -92,7 +92,8 @@ router.post(
         let jwToken = jwt.sign({ 
           email: newUser.email,
           isRecruiter:false,
-          id: newUser.id
+          id: newUser.jobseeker_id,
+          isAdmin:req.query.isAdmin
         }, JWT_KEY); //  create token with payload as email,id and other important fields
         res.cookie("login", jwToken, { httpOnly: true }); // set cookie
 

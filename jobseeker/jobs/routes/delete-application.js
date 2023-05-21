@@ -9,8 +9,9 @@ const NotFoundError = require('../../../common/src/errors/not-found-error');
 const Job = require('../../../recruiter/jobs/models/job');
 const JWT_KEY = process.env.JWT_KEY;
 const Response=require('../../../recruiter/jobs/models/response');
+const requireAuth = require('../../../common/src/middlewares/require-auth');
 router.delete(
-  '/api/jobseeker/:id/apply/:jobid',
+  '/api/jobseeker/:id/apply/:jobid',requireAuth,
   [
     param('jobid')
       .trim()

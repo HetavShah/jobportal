@@ -105,7 +105,7 @@ router.post(
       {
         email: newUser.email,
         isRecruiter: true,
-        id: newUser.id,
+        id: newUser.recruiter_id,
       },
       JWT_KEY
     ); //  create token with payload as email,id and other important fields

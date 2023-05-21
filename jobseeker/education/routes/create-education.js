@@ -6,8 +6,9 @@ const validateRequest = require('../../../common/src/middlewares/request-validat
 const router = express.Router();
 const NotFoundError = require('../../../common/src/errors/not-found-error');
 const Education=require('../models/education');
+const requireAuth = require('../../../common/src/middlewares/require-auth');
 router.post(
-  '/api/jobseeker/:id/education',
+  '/api/jobseeker/:id/education',requireAuth,
   [
     body('education').isArray().withMessage('Must be an array'),
     body('education.*')

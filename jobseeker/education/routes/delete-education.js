@@ -4,8 +4,9 @@ const validateRequest = require('../../../common/src/middlewares/request-validat
 const router = express.Router();
 const NotFoundError = require('../../../common/src/errors/not-found-error');
 const Education = require('../models/education');
+const requireAuth = require('../../../common/src/middlewares/require-auth');
 router.delete(
-  '/api/jobseeker/:id/education/:eduid',
+  '/api/jobseeker/:id/education/:eduid',requireAuth,
 [
    param("id").isUUID().withMessage("Please Provide valid Jobseeker id"),
    param("eduid").isUUID().withMessage("Please Provide valid Education id"),

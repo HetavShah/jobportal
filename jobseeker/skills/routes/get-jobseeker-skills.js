@@ -2,9 +2,10 @@ const express = require('express');
 const Jobseeker = require('../../user/models/jobseeker');
 const router = express.Router();
 const NotFoundError = require('../../../common/src/errors/not-found-error');
+const requireAuth = require('../../../common/src/middlewares/require-auth');
 
 router.get(
-  '/api/jobseeker/:id/skills',
+  '/api/jobseeker/:id/skills',requireAuth,
   async (req, res) => {
     const data = req.body.skills;
     let jobseeker = await Jobseeker.findOne({

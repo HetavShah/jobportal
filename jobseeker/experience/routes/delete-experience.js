@@ -4,8 +4,9 @@ const validateRequest = require('../../../common/src/middlewares/request-validat
 const router = express.Router();
 const NotFoundError = require('../../../common/src/errors/not-found-error');
 const Experience = require('../models/experience');
+const requireAuth = require('../../../common/src/middlewares/require-auth');
 router.delete(
-  '/api/jobseeker/:id/experience/:expid',
+  '/api/jobseeker/:id/experience/:expid',requireAuth,
 [
    param("id").isUUID().withMessage("Please Provide valid Jobseeker id"),
    param("expid").isUUID().withMessage("Please Provide valid Experience id"),

@@ -9,8 +9,11 @@ const { jobseekerRouter } = require('./jobseeker/index');
 const errorHandler = require('./common/src/middlewares/error-handler');
 const { recruiterRouter } = require('./recruiter/index');
 
+if(!process.env.JWT_KEY) throw new Error("JWT_KEY is not defined")
+if(!process.env.DATABASE_URL) throw new Error("DATABASE_URL is not defined")
+
 const app = express();
-const port = 3000;
+const port = process.env.PORT||3000;
 app.use(express.json());
 app.use(cookieParser());
 app.use(helmet()); // secure headers

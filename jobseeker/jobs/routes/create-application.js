@@ -6,9 +6,10 @@ const validateRequest = require('../../../common/src/middlewares/request-validat
 const router = express.Router();
 const NotFoundError = require('../../../common/src/errors/not-found-error');
 const Job = require('../../../recruiter/jobs/models/job');
+const requireAuth = require('../../../common/src/middlewares/require-auth');
 
 router.post(
-  '/api/jobseeker/:id/apply',
+  '/api/jobseeker/:id/apply',requireAuth,
   [
     body('job_id')
       .trim()

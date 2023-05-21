@@ -11,8 +11,9 @@ const Response = require('../models/response');
 const Experience = require('../../../jobseeker/experience/models/experience');
 const JobseekerSkill = require('../../../jobseeker/skills/models/jobseeker-skill');
 const Skill = require('../../../skills/models/skill');
+const requireAuth = require('../../../common/src/middlewares/require-auth');
 
-router.get('/api/recruiter/:id/jobs/:jobid/response', async (req, res) => {
+router.get('/api/recruiter/:id/jobs/:jobid/response',requireAuth, async (req, res) => {
   const candidates = await Response.findAll({
     where: {
       recruiter_id: req.params.id,

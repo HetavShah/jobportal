@@ -3,10 +3,11 @@ const { param } = require('express-validator');
 const NotFoundError = require('../../../common/src/errors/not-found-error');
 const Jobseeker = require('../models/jobseeker');
 const validateRequest = require('../../../common/src/middlewares/request-validation');
+const requireAuth = require('../../../common/src/middlewares/require-auth');
 const router = express.Router();
 
 router.get(
-  '/api/jobseeker/:id',
+  '/api/jobseeker/:id',requireAuth,
   [param('id').notEmpty().isUUID().withMessage('Please enter valid id')],
   validateRequest,
   async (req, res) => {

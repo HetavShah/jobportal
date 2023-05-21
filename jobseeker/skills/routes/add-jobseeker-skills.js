@@ -7,8 +7,9 @@ const router = express.Router();
 const NotFoundError = require('../../../common/src/errors/not-found-error');
 const JobseekerSkill = require('../models/jobseeker-skill');
 const Skill = require('../../../skills/models/skill');
+const requireAuth = require('../../../common/src/middlewares/require-auth');
 router.post(
-  '/api/jobseeker/:id/skills',
+  '/api/jobseeker/:id/skills',requireAuth,
   [
     body('skills').isArray().withMessage('Must be an array'),
     body('skills.*').isObject().withMessage('Array elements must be objects'),

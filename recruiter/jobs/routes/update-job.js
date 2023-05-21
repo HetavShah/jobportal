@@ -8,9 +8,10 @@ const JobLocation = require('../models/location');
 const JobType = require('../models/type');
 const Skill = require('../../../skills/models/skill');
 const NotFoundError = require('../../../common/src/errors/not-found-error');
+const requireAuth = require('../../../common/src/middlewares/require-auth');
 
 router.patch(
-  '/api/recruiter/:id/jobs/:jobid',
+  '/api/recruiter/:id/jobs/:jobid',requireAuth,
   [
     body('location')
       .if(body('location').exists())

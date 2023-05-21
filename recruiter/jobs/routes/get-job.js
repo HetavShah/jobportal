@@ -10,8 +10,9 @@ const Skill = require('../../../skills/models/skill');
 const NotFoundError = require('../../../common/src/errors/not-found-error');
 const Recruiter = require('../../user/models/recruiter');
 const Company = require('../../user/models/company');
+const requireAuth = require('../../../common/src/middlewares/require-auth');
 
-router.get('/api/recruiter/:id/jobs/:jobid', async (req, res) => {
+router.get('/api/recruiter/:id/jobs/:jobid',requireAuth, async (req, res) => {
   const job = await Job.findOne({
     where: {
       recruiter_id: req.params.id,

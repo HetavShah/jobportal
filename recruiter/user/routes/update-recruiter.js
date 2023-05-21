@@ -5,8 +5,9 @@ const  Recruiter  = require('../models/recruiter');
 const validateRequest = require('../../../common/src/middlewares/request-validation');
 const router = express.Router();
 const NotFoundError = require('../../../common/src/errors/not-found-error');
+const requireAuth = require('../../../common/src/middlewares/require-auth');
 router.patch(
-  '/api/recruiter/:id',
+  '/api/recruiter/:id',requireAuth,
   [
     param("id").isUUID().withMessage("Please enter valid id"),
     body('email')
