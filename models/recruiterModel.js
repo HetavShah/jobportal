@@ -68,7 +68,6 @@ Recruiter.init(
     },
     {
         sequelize,
-        modelName: 'recruiter',
         tableName: 'recruiter',
         createdAt: false,
         updatedAt: false,

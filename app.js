@@ -1,38 +1,45 @@
-const express=require('express')
-const app=express();
-const port=3000;
-const db = require("./config/database");
-const jobseekerRouter=require('./routers/jobseekerRouter');
-const recruiterRoute=require('./routers/recruiterRouter');
-const {syncTables}=require('./models/syncTables');
-const cookieParser=require('cookie-parser');
+const express = require('express');
+require('express-async-errors');
+const app = express();
+const port = 3000;
+const db = require('./config/database');
+// const recruiterRoute=require('./routers/recruiterRouter');
+const cookieParser = require('cookie-parser');
+const { jobseekerRouter } = require('./jobseeker/index');
+const errorHandler = require('./common/src/middlewares/error-handler');
+const { recruiterRouter } = require('./recruiter/index');
 app.use(express.json());
 app.use(cookieParser());
-app.get('/',function startUp(req,res){
-
-    return res.json({
-        message:"Home Page"
-    })
-
-})
-app.use('/jobseeker',jobseekerRouter);
-app.use('/recruiter',recruiterRoute);
-app.get('*', function(req, res){
-    res.status(404).json({
-        message:'Page Not Found'
-    });
+app.get('/', (req, res) => {
+  return res.json({
+    message: 'Welcome to Jobs4You',
   });
+});
 
-const initApp = async () => {
-    try {
-        await db.authenticate();
-        console.log("Database Connected");
-        app.listen(process.env.PORT || 3000, () => {
-            console.log(`Server is up and running at: http://localhost:${port}`);
-        });
-    } catch (error) {
-        console.error("Unable to connect to the database:", error.message);
-    }
+app.use(jobseekerRouter);
+app.use(recruiterRouter);
+// app.use('/recruiter',recruiterRoute);
+app.all('*', (req, res) => {
+  res.status(404).json({
+    message: 'Page Not Found',
+  });
+});
+
+app.use(errorHandler);
+
+const start = async () => {
+  try {
+    await db.authenticate();
+    //it will sync all the tables in the database
+    await db.sync({
+      force: true,
+    });
+    console.log('Database Connected');
+    app.listen(process.env.PORT || 3000, () => {
+      console.log(`Server is up and running at: http://localhost:${port}`);
+    });
+  } catch (error) {
+    console.error('Unable to connect to the database:', error.message);
+  }
 };
-initApp();
-syncTables();
+start();

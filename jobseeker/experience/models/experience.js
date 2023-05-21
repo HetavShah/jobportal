@@ -1,13 +1,12 @@
 const { Sequelize, DataTypes, Model } = require("sequelize");
-const sequelize = require("../config/database");
-const jobseekerModel=require('./jobseekerModel');
+const sequelize = require("../../../config/database");
+const Jobseeker=require('../../user/models/jobseeker');
 class Experience extends Model{}
 
 Experience.init(
     {
         jobseeker_id:{
             type:DataTypes.UUID,
-            allowNull:false
         },
         exp_id:{
             type:DataTypes.UUID,
@@ -37,7 +36,6 @@ Experience.init(
     {
         // options
         sequelize,
-        modelName: 'experience',
         tableName: 'experience',
         createdAt: false,
         updatedAt: false,
@@ -45,13 +43,12 @@ Experience.init(
       }
 )
 Experience.removeAttribute('id');
-
-jobseekerModel.hasMany(Experience,{
+Jobseeker.hasMany(Experience,{
     foreignKey:'jobseeker_id',
     onDelete:'CASCADE',
     onUpdate:'CASCADE'
 });
-Experience.belongsTo(jobseekerModel,{
+Experience.belongsTo(Jobseeker,{
     foreignKey:'jobseeker_id',
     onDelete:'CASCADE',
     onUpdate:'CASCADE'

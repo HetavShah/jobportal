@@ -30,7 +30,6 @@ Response.init(
     },
     {
         sequelize,
-        modelName: 'response',
         tableName: 'response',
         createdAt: false,
         updatedAt: false,

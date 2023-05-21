@@ -26,7 +26,6 @@ Apply.init(
     },
     {
         sequelize,
-        modelName: 'apply',
         tableName: 'apply',
         createdAt: false,
         updatedAt: false,

@@ -40,7 +40,7 @@ Job.init(
     },
     {
         sequelize,
-        modelName: 'job',
+       
         tableName: 'job',
         createdAt: false,
         updatedAt: false,

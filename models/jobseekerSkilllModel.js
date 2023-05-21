@@ -26,7 +26,6 @@ JobseekerSkill.init(
   {
     // options
     sequelize,
-    modelName: "jobseeker_skill",
     tableName: "jobseeker_skill",
     createdAt: false,
     updatedAt: false,

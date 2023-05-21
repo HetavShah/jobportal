@@ -1,10 +1,10 @@
-const { Sequelize, DataTypes, Model } = require("sequelize");
-const sequelize = require("../config/database");
-class Skillset extends Model{}
+const { DataTypes, Model } = require("sequelize");
+const sequelize = require("../../config/database");
+class Skill extends Model{}
 
-Skillset.init(
+Skill.init(
     {
-        skillset_id:{
+        skill_id:{
             type:DataTypes.INTEGER,
             autoIncrement:true,
             primaryKey:true
@@ -18,13 +18,12 @@ Skillset.init(
     {
         // options
         sequelize,
-        modelName: 'skillset',
         tableName: 'skillset',
         createdAt: false,
         updatedAt: false,
         underscore: false,
       }
 )
-Skillset.removeAttribute('id');
+Skill.removeAttribute('id');
 
-module.exports=Skillset;
+module.exports=Skill;

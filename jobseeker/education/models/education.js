@@ -1,17 +1,15 @@
 const { Sequelize, DataTypes, Model } = require("sequelize");
-const sequelize = require("../config/database");
-const jobseekerModel=require('./jobseekerModel');
+const sequelize = require("../../../config/database");
+const Jobseeker=require('../../user/models/jobseeker');
 class Education extends Model{}
 
 Education.init(
     {
         jobseeker_id:{
-            type:DataTypes.UUID,
-            allowNull:false
+            type:DataTypes.UUID, 
         },
         edu_id:{
             type:DataTypes.UUID,
-            allowNull:false,
             defaultValue:DataTypes.UUIDV4,
             primaryKey:true
         },
@@ -51,7 +49,7 @@ Education.init(
                 throw new Error("End Year Must Be Greater then Start Year");
             }
         },
-        modelName: 'education',
+
         tableName: 'education',
         createdAt: false,
         updatedAt: false,
@@ -60,12 +58,12 @@ Education.init(
 )
 Education.removeAttribute('id');
 
-jobseekerModel.hasMany(Education,{
+Jobseeker.hasMany(Education,{
     foreignKey:'jobseeker_id',
     onDelete:'CASCADE',
     onUpdate:'CASCADE'
 });
-Education.belongsTo(jobseekerModel,{
+Education.belongsTo(Jobseeker,{
     foreignKey:'jobseeker_id',
     onDelete:'CASCADE',
     onUpdate:'CASCADE'

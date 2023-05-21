@@ -11,7 +11,7 @@ module.exports.signup = async function signup(req, res) {
   try {
     let data = req.body;
 
-    if (req.baseUrl == "/jobseeker") {
+    if (req.baseUrl === "/jobseeker") {
       let createdData = await jobseekerModel.create(data);
       if (createdData) {
         return res.status(200).json({
@@ -23,7 +23,7 @@ module.exports.signup = async function signup(req, res) {
           message: "Invalid Details",
         });
       }
-    } else if (req.baseUrl == "/recruiter") {
+    } else if (req.baseUrl === "/recruiter") {
       let recruiterData = req.body["recruiter_details"];
       let companyData = req.body["company_details"];
 

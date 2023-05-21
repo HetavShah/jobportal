@@ -1,5 +1,5 @@
 const { Sequelize, DataTypes, Model } = require("sequelize");
-const sequelize = require("../config/database");
+const sequelize = require("../../../config/database");
 const {phone} = require('phone');
 const bcrypt=require('bcrypt');
 class Jobseeker extends Model{}
@@ -61,7 +61,7 @@ Jobseeker.init(
         },
         password:{
             type:DataTypes.STRING,
-            allowNull:false
+            allowNull:false,
         },
         dob:{
             type:DataTypes.DATE,
@@ -71,7 +71,6 @@ Jobseeker.init(
    {
      // options
      sequelize,
-     modelName: 'jobseeker',
      tableName: 'jobseeker',
      createdAt: false,
      updatedAt: false,
@@ -81,21 +80,13 @@ Jobseeker.init(
 )
 Jobseeker.removeAttribute('id');
 
-Jobseeker.beforeCreate(async function HashPassword(user,options){
-    let salt=await bcrypt.genSalt();
-    let hashedString= await bcrypt.hash(user.password,salt);
-    user.password=hashedString;
-    //   console.log(user.password);
-    //   console.log(hashedString);
-})
-// Jobseeker.beforeUpdate(async function updateIfPassword(user,options) {       //Update Password with hash password
-//     if(user.password)
-//     {
-//         let salt=bcrypt.genSalt();
-//         let hashedString= await bcrypt.hash(user.password,salt);
-//         user.password=hashedString;
-        
-//     }
-//   })
+Jobseeker.beforeSave(async function HashPassword(user,options){
+    if(user.changed('password'))
+    {
+        let salt=await bcrypt.genSalt();
+        let hashedString= await bcrypt.hash(user.password,salt);
+        user.password=hashedString;
 
+    }  
+})
 module.exports=Jobseeker;

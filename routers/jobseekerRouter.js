@@ -1,5 +1,6 @@
 const express = require("express");
 const jobseekerRouter = express.Router();
+const {signupRouter}=require('../jobseeker/user/routes/signup');
 const {
   signup,
   login,
@@ -31,6 +32,7 @@ const {
   jobResponseById,
 } = require("../controllers/jobController");
 
+
 jobseekerRouter //Auth Routes
   .route("/signup")
   .post(signup);
@@ -47,51 +49,55 @@ jobseekerRouter
   .route("/job")
   .get(allJobs);
 
+
+jobseekerRouter.use(protectRoute);
 jobseekerRouter //Basic Profile CRUD Routes
   .route("/:id")
-  .get(protectRoute, getUserById)
-  .patch(protectRoute, updateUserById)
-  .delete(protectRoute, deleteUserById);
+  .get(getUserById)
+  .patch(updateUserById)
+  .delete(deleteUserById);
 
 jobseekerRouter
 .route("/:id/education") //Education Details CRUD Routes
-.get(protectRoute, getProfileDetails)
-.post(protectRoute, createProfileDetails)
+.get(getProfileDetails)
+.post(createProfileDetails)
 
 jobseekerRouter
   .route("/:id/education/:eduid")
-  .patch(protectRoute, updateProfileDetails)
-  .delete(protectRoute, deleteProfileDetails)
+  .patch(updateProfileDetails)
+  .delete(deleteProfileDetails)
 
 jobseekerRouter //Experience Details CRUD Routes
 .route("/:id/experience")
-.get(protectRoute, getProfileDetails)
-.post(protectRoute, createProfileDetails)
+.get(getProfileDetails)
+.post(createProfileDetails)
 
 jobseekerRouter 
   .route("/:id/experience/:expid")
-  .patch(protectRoute, updateProfileDetails)
-  .delete(protectRoute, deleteProfileDetails);
+  .patch(  updateProfileDetails)
+  .delete(  deleteProfileDetails);
 
 jobseekerRouter //Skill Details CRUD Routes
   .route("/:id/skills")
-  .get(protectRoute, getSkills)
-  .post(protectRoute, addSkills)
-  .patch(protectRoute, updateSkills)
-  .delete(protectRoute, deleteSkills);
+  .get(getSkills)
+  .post(addSkills)
+  .patch(updateSkills)
+  .delete(deleteSkills);
 
 
 jobseekerRouter
   .route("/:id/apply/:jobid")   //Job Apply Routes
-  .post(protectRoute, applyForJob)
-  .delete(protectRoute, deleteJobApplication);
+  .post(applyForJob)
+  .delete(deleteJobApplication);
 
 jobseekerRouter
 .route("/:id/response")
-.get(protectRoute, allJobResponse);
+.get(allJobResponse);
 
 jobseekerRouter
   .route("/:id/response/:jobid")
-  .get(protectRoute, jobResponseById);
+  .get(jobResponseById);
+
+
 
 module.exports = jobseekerRouter;
