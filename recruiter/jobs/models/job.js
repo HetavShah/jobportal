@@ -1,18 +1,15 @@
 const { DataTypes, Model, UUIDV4 } = require('sequelize');
 const sequelize = require('../../../config/database');
-const JobType = require('./job-type');
-const JobLocation = require('./job-location');
+const JobType = require('./type');
+const JobLocation = require('./location');
 class Job extends Model {}
-
 Job.init(
   {
     location_id: {
       type: DataTypes.INTEGER,
-
     },
     type_id: {
       type: DataTypes.INTEGER,
-
     },
     recruiter_id: {
       type: DataTypes.UUID,
@@ -21,7 +18,7 @@ Job.init(
       type: DataTypes.UUID,
       allowNull: false,
       primaryKey: true,
-      defaultValue:DataTypes.UUIDV4,
+      defaultValue: DataTypes.UUIDV4,
     },
     descrip: {
       type: DataTypes.STRING(1000),
@@ -33,9 +30,9 @@ Job.init(
       allowNull: false,
     },
     expiry_date: {
-        type: DataTypes.DATE,
-        allowNull: false,
-      },
+      type: DataTypes.DATE,
+      allowNull: false,
+    },
   },
   {
     sequelize,

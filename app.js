@@ -1,15 +1,21 @@
 const express = require('express');
 require('express-async-errors');
-const app = express();
-const port = 3000;
+const helmet=require('helmet');
+const morgan=require('morgan');
+const xss=require('xss-clean');
 const db = require('./config/database');
-// const recruiterRoute=require('./routers/recruiterRouter');
 const cookieParser = require('cookie-parser');
 const { jobseekerRouter } = require('./jobseeker/index');
 const errorHandler = require('./common/src/middlewares/error-handler');
 const { recruiterRouter } = require('./recruiter/index');
+
+const app = express();
+const port = 3000;
 app.use(express.json());
 app.use(cookieParser());
+app.use(helmet()); // secure headers
+app.use(xss()); // prevent cross site scripting attacks
+app.use(morgan("dev")); // log the request on the console
 app.get('/', (req, res) => {
   return res.json({
     message: 'Welcome to Jobs4You',
@@ -18,7 +24,6 @@ app.get('/', (req, res) => {
 
 app.use(jobseekerRouter);
 app.use(recruiterRouter);
-// app.use('/recruiter',recruiterRoute);
 app.all('*', (req, res) => {
   res.status(404).json({
     message: 'Page Not Found',
@@ -32,7 +37,7 @@ const start = async () => {
     await db.authenticate();
     //it will sync all the tables in the database
     await db.sync({
-      force: true,
+        force:true
     });
     console.log('Database Connected');
     app.listen(process.env.PORT || 3000, () => {
