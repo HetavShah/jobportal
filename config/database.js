@@ -2,7 +2,7 @@ const Sequelize=require('sequelize');
 require('dotenv').config();
 const DB_LINK=process.env.DATABASE_URL;
 let sequelize;
-if(DB_LINK==process.env.LOCAL_DB_LINK)
+if(DB_LINK==process.env.LOCAL_DB)
 
 {
   
