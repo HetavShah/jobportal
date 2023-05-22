@@ -2,6 +2,7 @@ const express = require('express');
 require('express-async-errors');
 const helmet=require('helmet');
 const morgan=require('morgan');
+const pg=require('pg');
 const xss=require('xss-clean');
 const db = require('./config/database');
 const cookieParser = require('cookie-parser');
